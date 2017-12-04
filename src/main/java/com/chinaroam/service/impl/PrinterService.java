@@ -24,7 +24,7 @@ public class PrinterService implements IPrinterService {
 
 	
 	@Override
-	public List<Printer> queryAll() throws ServiceException {
+	public List<Printer> queryAll(String access_token) throws ServiceException {
 		return printerDao.queryAll();
 	}
 

@@ -28,7 +28,7 @@ public class UserController {
 	private IPrinterService printerService;
 
 	@GetMapping("printer/{id}")
-	public ResponseEntity<Printer> find(@PathVariable("id") Integer id) {
+	public ResponseEntity<Printer> findPrinter(@PathVariable("id") Integer id) {
 		try {
 			Printer printer = printerService.find(id);
 			return new ResponseEntity<Printer>(printer, HttpStatus.OK);
@@ -40,9 +40,9 @@ public class UserController {
 	}
 
 	@GetMapping("printers")
-	public ResponseEntity<List<Printer>> queryAll() {
+	public ResponseEntity<List<Printer>> queryAllPrinters(@PathVariable("access_token") String access_token) {
 		try {
-			List<Printer> list = printerService.queryAll();
+			List<Printer> list = printerService.queryAll(access_token);
 			return new ResponseEntity<List<Printer>>(list, HttpStatus.OK);
 		}
 		catch(ServiceException sex) {
@@ -51,7 +51,8 @@ public class UserController {
 	}
 	
 	@PostMapping("printer")
-	public ResponseEntity<Void> add(@RequestBody Printer printer, UriComponentsBuilder builder) {
+	public ResponseEntity<Void> addPrinter(@PathVariable("access_token") String access_token
+			, @RequestBody Printer printer, UriComponentsBuilder builder) {
 		try {
 			printerService.add(printer);
 
@@ -66,7 +67,8 @@ public class UserController {
 
 
 	@PutMapping("printer")
-	public ResponseEntity<Printer> update(@RequestBody Printer printer) {
+	public ResponseEntity<Printer> updatePrinter(@PathVariable("access_token") String access_token
+			, @RequestBody Printer printer) {
 		try {
 			printerService.update(printer);		
 			return new ResponseEntity<Printer>(printer, HttpStatus.OK);
@@ -75,8 +77,11 @@ public class UserController {
 			return new ResponseEntity<Printer>(HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	
 	@DeleteMapping("printer/{id}")
-	public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
+	public ResponseEntity<Void> deletePrinter(@PathVariable("access_token") String access_token
+			, @PathVariable("id") Integer id) {
 		try {
 			printerService.delete(id);		
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);

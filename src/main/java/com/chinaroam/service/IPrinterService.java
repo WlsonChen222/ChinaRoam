@@ -7,7 +7,7 @@ import com.chinaroam.service.throwable.ServiceException;
 
 public interface IPrinterService {
 	
-	public List<Printer> queryAll()throws ServiceException;
+	public List<Printer> queryAll(String access_token)throws ServiceException;
 	
 	public Printer find(Integer id)throws ServiceException;
 	
